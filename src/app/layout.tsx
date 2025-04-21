@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className="flex justify-center ">
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

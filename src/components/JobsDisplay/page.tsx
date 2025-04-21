@@ -20,7 +20,7 @@ export default function JobsDisplay() {
 
   return (
     <>
-      <Card className=" m-5 min-w-sm ">
+      <Card className=" m-2 ">
         <CardHeader>
           <CardTitle>
             All jobs{" "}

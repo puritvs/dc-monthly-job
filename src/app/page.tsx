@@ -3,11 +3,9 @@ import JobsDisplay from "@/components/JobsDisplay/page";
 
 export default function Home() {
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row">
-        <JobForm />
-        <JobsDisplay />
-      </div>
+    <div className="flex justify-center align-top  flex-col sm:flex-row">
+      <JobForm />
+      <JobsDisplay />
     </div>
   );
 }
