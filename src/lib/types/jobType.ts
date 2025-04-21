@@ -1,4 +1,4 @@
 export enum JobType {
-  DANCER = "dancer",
-  CHOREOGRAPHER = "choreographer",
+  DANCER = "Dancer",
+  CHOREOGRAPHER = "Choreographer",
 }

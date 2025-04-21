@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
@@ -38,29 +37,48 @@ import {
 } from "@/components/ui/card";
 import { JobType } from "@/lib/types/jobType";
 import { Job } from "@/lib/types/job";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { JobsContext } from "@/contexts/jobsContext";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { PeriodType } from "@/lib/types/periodType";
 
 const formSchema = z.object({
   type: z.nativeEnum(JobType),
 
   name: z.string().min(1, { message: "name must not be empty" }),
+  periodType: z.nativeEnum(PeriodType),
   startDate: z.date({ required_error: "job start date is required" }),
-  endDate: z.date().nullable(),
+  endDate: z.date({ required_error: "job start date is required" }),
 });
+const defaultValues = {
+  type: JobType.DANCER,
+  name: "",
+  periodType: PeriodType.SINGLE_DATE,
+  startDate: new Date(),
+  endDate: new Date(),
+};
 export default function JobForm() {
   const { jobs, setJobs } = useContext(JobsContext);
-  const form = useForm({ resolver: zodResolver(formSchema) });
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues,
+  });
 
   const onSubmit = async (data: Job) => {
     console.log("submit: ", data);
     setJobs([...jobs, data]);
   };
+  const periodType = form.watch("periodType");
+  const startDate = form.watch("startDate");
+  useEffect(() => {
+    if (periodType === PeriodType.SINGLE_DATE)
+      form.setValue("endDate", startDate);
+    return () => {};
+  }, [startDate, periodType]);
 
   return (
     <Form {...form}>
@@ -111,8 +129,39 @@ export default function JobForm() {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="enter job name" {...field} />
+                        <Input placeholder="Enter job name" {...field} />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="periodType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Period Type</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a job type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value={PeriodType.SINGLE_DATE}>
+                            Single Day
+                          </SelectItem>
+                          <SelectItem value={PeriodType.PERIOD}>
+                            Period
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -156,9 +205,52 @@ export default function JobForm() {
                           />
                         </PopoverContent>
                       </Popover>
-                      <FormDescription>
-                        Your date of birth is used to calculate your age.
-                      </FormDescription>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="endDate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>End Date</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              disabled={periodType !== PeriodType.PERIOD}
+                              variant={"outline"}
+                              className={cn(
+                                "w-[240px] pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+
                       <FormMessage />
                     </FormItem>
                   )}
@@ -167,9 +259,9 @@ export default function JobForm() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline" onClick={() => form.reset()}>
+            {/* <Button variant="outline" onClick={() => form.reset(defaultValues)}>
               Reset
-            </Button>
+            </Button> */}
             <Button type="submit">Add</Button>
           </CardFooter>
         </Card>

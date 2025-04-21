@@ -1,7 +1,6 @@
 "use client";
 
 import { JobsContext } from "@/contexts/jobsContext";
-import { Job } from "@/lib/types/job";
 import { useContext } from "react";
 import {
   Card,
@@ -10,22 +9,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { DataTable } from "./dataTable";
+import { Button } from "../ui/button";
+import { TimerReset } from "lucide-react";
+import { columns } from "./columns";
+
 export default function JobsDisplay() {
-  const { jobs } = useContext(JobsContext);
+  const { jobs, setJobs } = useContext(JobsContext);
 
   return (
     <>
       <Card className=" m-5 min-w-sm ">
         <CardHeader>
-          <CardTitle>All jobs</CardTitle>
+          <CardTitle>
+            All jobs{" "}
+            <Button variant="outline" onClick={() => setJobs([])}>
+              Reset <TimerReset />
+            </Button>
+          </CardTitle>
           <CardDescription>display all jobs</CardDescription>
         </CardHeader>
         <CardContent>
-          {jobs.map((job: Job) => (
-            <div>
-              <span> {`${job.type} - ${job.name}`} </span>
-            </div>
-          ))}
+          <DataTable columns={columns} data={jobs} />
         </CardContent>
       </Card>
     </>

@@ -1,4 +1,4 @@
 export enum PeriodType {
-  SINGLE_DATE,
-  PERIOD,
+  SINGLE_DATE = "Single Day",
+  PERIOD = "Period",
 }
