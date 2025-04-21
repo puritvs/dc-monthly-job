@@ -7,4 +7,6 @@ export type Job = {
   periodType: PeriodType;
   startDate: Date;
   endDate: Date;
+  description: string;
+  remark: string;
 };

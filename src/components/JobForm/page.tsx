@@ -45,6 +45,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PeriodType } from "@/lib/types/periodType";
+import { describe } from "node:test";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
   type: z.nativeEnum(JobType),
@@ -53,6 +55,8 @@ const formSchema = z.object({
   periodType: z.nativeEnum(PeriodType),
   startDate: z.date({ required_error: "job start date is required" }),
   endDate: z.date({ required_error: "job start date is required" }),
+  description: z.string(),
+  remark: z.string(),
 });
 const defaultValues = {
   type: JobType.DANCER,
@@ -60,6 +64,8 @@ const defaultValues = {
   periodType: PeriodType.SINGLE_DATE,
   startDate: new Date(),
   endDate: new Date(),
+  description: "",
+  remark: "",
 };
 export default function JobForm() {
   const { jobs, setJobs } = useContext(JobsContext);
@@ -256,6 +262,43 @@ export default function JobForm() {
                   )}
                 />
               </div>
+            </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Type your job details here..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Additional details of the job
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="remark"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Remark</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
