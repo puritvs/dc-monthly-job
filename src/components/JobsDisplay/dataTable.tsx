@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
           }}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Filter a Job Type" />
+            <SelectValue placeholder="Filter job type" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
