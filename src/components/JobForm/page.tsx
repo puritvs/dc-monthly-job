@@ -83,7 +83,7 @@ export default function JobForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Card className=" m-2 ">
+        <Card className=" sm:m-2 md:m-5">
           <CardHeader>
             <CardTitle>Add job</CardTitle>
             <CardDescription>
