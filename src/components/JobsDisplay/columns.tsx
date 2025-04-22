@@ -64,13 +64,13 @@ export const columns: ColumnDef<Job>[] = [
     header: "Job Type",
   },
   { accessorKey: "name", header: "Job Name" },
+  { accessorKey: "remark", header: "Remarks" },
 
   {
     id: "actions",
     cell: ({ row }) => {
       const { jobs, setJobs } = useContext(JobsContext);
       const job = row.original;
-      console.log(job);
 
       return (
         <div>
