@@ -6,9 +6,13 @@ import { createContext, useState, Dispatch, SetStateAction } from "react";
 export const JobsContext = createContext<{
   jobs: Job[];
   setJobs: Dispatch<SetStateAction<Job[]>>;
+  selected: Job | null;
+  setSelected: Dispatch<SetStateAction<Job | null>>;
 }>({
   jobs: [],
   setJobs: () => {},
+  selected: null,
+  setSelected: () => {},
 });
 
 export default function JobsProvider({
@@ -17,9 +21,9 @@ export default function JobsProvider({
   children: React.ReactNode;
 }) {
   const [jobs, setJobs] = useState<Job[]>([]);
-
+  const [selected, setSelected] = useState<Job | null>(null);
   return (
-    <JobsContext.Provider value={{ jobs, setJobs }}>
+    <JobsContext.Provider value={{ jobs, setJobs, selected, setSelected }}>
       {children}
     </JobsContext.Provider>
   );
