@@ -17,13 +17,22 @@ import { Separator } from "@radix-ui/react-select";
 import { format } from "date-fns";
 import { useContext } from "react";
 import { ScrollArea } from "../ui/scroll-area";
+import { Job } from "@/lib/types/job";
+import { PenTool } from "lucide-react";
 
 export function JobRawTextDialog() {
   const { jobs } = useContext(JobsContext);
+  const sortByStartDate = (a: Job, b: Job) => {
+    if (a.startDate === b.startDate) return 0;
+    else if (a.startDate < b.startDate) return -1;
+    else return 1;
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Raw Text</Button>
+        <Button variant="outline">
+          Raw Text <PenTool />{" "}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -34,6 +43,7 @@ export function JobRawTextDialog() {
         <Label>{JobType.CHOREOGRAPHER}</Label>
         <ScrollArea className=" h-full  w-fit ">
           {jobs
+            .sort((a: Job, b: Job) => sortByStartDate(a, b))
             .filter((job) => job.type === JobType.CHOREOGRAPHER)
             .map((job, index) => (
               <div key={`${index}`}>
@@ -54,6 +64,7 @@ export function JobRawTextDialog() {
           <Label>{JobType.DANCER}</Label>
 
           {jobs
+            .sort((a: Job, b: Job) => sortByStartDate(a, b))
             .filter((job) => job.type === JobType.DANCER)
             .map((job, index) => (
               <div key={`${index}`}>
