@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -14,6 +15,7 @@ import { DataTable } from "./dataTable";
 import { Button } from "../ui/button";
 import { TimerReset } from "lucide-react";
 import { columns } from "./columns";
+import { JobRawTextDialog } from "../JobRawTextDialog/page";
 
 export default function JobsDisplay() {
   const { jobs, setJobs } = useContext(JobsContext);
@@ -33,6 +35,9 @@ export default function JobsDisplay() {
         <CardContent>
           <DataTable columns={columns} data={jobs} />
         </CardContent>
+        <CardFooter>
+          <JobRawTextDialog />
+        </CardFooter>
       </Card>
     </>
   );

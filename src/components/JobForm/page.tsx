@@ -302,9 +302,6 @@ export default function JobForm() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            {/* <Button variant="outline" onClick={() => form.reset(defaultValues)}>
-              Reset
-            </Button> */}
             <Button type="submit">Add</Button>
           </CardFooter>
         </Card>
