@@ -15,13 +15,13 @@ import { JobType } from "@/lib/types/jobType";
 import { PeriodType } from "@/lib/types/periodType";
 import { Separator } from "@radix-ui/react-select";
 import { format } from "date-fns";
-import { useContext, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useContext, useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import { Job } from "@/lib/types/job";
 import { PenTool } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { jobToText } from "@/lib/utils";
-
+import fs from "fs";
 export function JobRawTextDialog() {
   const { jobs } = useContext(JobsContext);
   const [isCopied, setIsCopied] = useState(false);
@@ -42,6 +42,11 @@ export function JobRawTextDialog() {
       console.error("Failed to copy text: ", error);
     }
   };
+  const onFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("file selected: ", e.currentTarget.files);
+
+    // const result = fs.writeFile('')
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -55,12 +60,19 @@ export function JobRawTextDialog() {
           <DialogDescription>Formatted job summary</DialogDescription>
         </DialogHeader>
 
-        <Label>{JobType.CHOREOGRAPHER}</Label>
         <Textarea
-          className="w-full h-9/12 "
+          className="w-full h -9/12 "
           defaultValue={jobToText(jobs)}
           // disabled={true}
         />
+        <Label htmlFor="textfile">Save</Label>
+        <Input
+          id="textfile"
+          accept=".txt"
+          type="file"
+          onChange={onFileSelect}
+        />
+        {/* <Button>Save</Button> */}
         {/* <ScrollArea className=" h-full  w-fit ">
           {jobs
             .sort((a: Job, b: Job) => sortByStartDate(a, b))
