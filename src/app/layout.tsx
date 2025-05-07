@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
 import JobsProvider from "@/contexts/jobsContext";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "DC-Monthly-Job",
@@ -26,6 +27,7 @@ export default function RootLayout({
         >
           <JobsProvider>{children}</JobsProvider>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

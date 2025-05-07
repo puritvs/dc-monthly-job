@@ -1,7 +1,13 @@
 "use client";
 
 import { Job } from "@/lib/types/job";
-import { createContext, useState, Dispatch, SetStateAction } from "react";
+import {
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from "react";
 
 export const JobsContext = createContext<{
   jobs: Job[];
@@ -27,4 +33,10 @@ export default function JobsProvider({
       {children}
     </JobsContext.Provider>
   );
+}
+
+export function useJobContext() {
+  const context = useContext(JobsContext);
+
+  return context;
 }
