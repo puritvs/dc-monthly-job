@@ -2,7 +2,6 @@
 import { ChangeEvent, useRef } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import { useJobContext } from "@/contexts/jobsContext";
 import { toast } from "sonner";
 
@@ -11,12 +10,21 @@ export default function JobImportButton() {
   const { jobs } = useJobContext();
 
   const onFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("file selected: ", e.currentTarget.files);
+    var fileList: File[] =
+      e.currentTarget.files === null ? [] : Array.from(e.currentTarget.files);
 
+    console.log("fileList length: ", fileList.length);
+
+    if (fileList.length >= 1) {
+      console.log("file: ", fileList[0]);
+    }
+    // await fetch('api/jobs',{method:'GET', headers: {
+    //     "Content-Type": "application/json",
+    //   }, })
     // const result = fs.writeFile('')
   };
   return (
-    <div>
+    <div className="flex space-x-1">
       <Button
         variant="outline"
         onClick={async () => {
@@ -27,16 +35,17 @@ export default function JobImportButton() {
             },
             body: JSON.stringify(jobs),
           });
-          console.log(result);
           if (result.status === 200) {
-            toast("Progress saved");
+            toast.success("Progress saved", {
+              description: "saved to .JSON file",
+            });
           }
         }}
       >
-        Save (.JSON)
+        Export .JSON
       </Button>
-      <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
-        Import
+      <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+        Import .JSON
       </Button>
       <Input
         ref={fileInputRef}

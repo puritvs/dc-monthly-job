@@ -16,3 +16,10 @@ export async function POST(request: Request) {
     return NextResponse.json(`Error: ${err}`);
   }
 }
+
+export async function GET(request: Request) {
+  const filePath = request.json();
+  console.log("requesting: ", filePath);
+
+  return NextResponse.json("Success");
+}
