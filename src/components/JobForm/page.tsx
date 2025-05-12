@@ -68,7 +68,7 @@ const defaultValues = {
   remark: "",
 };
 export default function JobForm() {
-  const { jobs, setJobs } = useContext(JobsContext);
+  const { jobs, setJobs,selected } = useContext(JobsContext);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -86,6 +86,12 @@ export default function JobForm() {
     return () => {};
   }, [startDate, periodType]);
 
+  useEffect(()=>{
+    if(selected){
+      form.reset(selected);
+    }
+
+  },[selected])
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -304,6 +310,7 @@ export default function JobForm() {
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button type="submit">Add</Button>
+            {selected && <Button   >Edit</Button>}
           </CardFooter>
         </Card>
       </form>

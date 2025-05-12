@@ -9,7 +9,6 @@ import { Job } from "@/lib/types/job";
 export default function JobImportButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { jobs,setJobs } = useJobContext();
-  const fileReader = new FileReader()
 
   const onFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     var fileList: File[] =
@@ -20,6 +19,8 @@ export default function JobImportButton() {
     if (fileList.length >= 1) {
       console.log("file: ", fileList[0]);
     }
+    const fileReader = new FileReader()
+
     fileReader.readAsText(fileList[0])
 
     fileReader.onloadend = (ev:ProgressEvent<FileReader>)=>{
