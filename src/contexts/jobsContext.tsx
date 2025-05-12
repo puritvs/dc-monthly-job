@@ -12,8 +12,8 @@ import {
 export const JobsContext = createContext<{
   jobs: Job[];
   setJobs: Dispatch<SetStateAction<Job[]>>;
-  selected: Job | null;
-  setSelected: Dispatch<SetStateAction<Job | null>>;
+  selected: number | null;
+  setSelected: Dispatch<SetStateAction<number | null>>;
 }>({
   jobs: [],
   setJobs: () => {},
@@ -27,7 +27,7 @@ export default function JobsProvider({
   children: React.ReactNode;
 }) {
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [selected, setSelected] = useState<Job | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
   return (
     <JobsContext.Provider value={{ jobs, setJobs, selected, setSelected }}>
       {children}

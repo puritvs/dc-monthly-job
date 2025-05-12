@@ -68,15 +68,21 @@ const defaultValues = {
   remark: "",
 };
 export default function JobForm() {
-  const { jobs, setJobs,selected } = useContext(JobsContext);
+  const { jobs, setJobs,selected,setSelected } = useContext(JobsContext);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
 
   const onSubmit = async (data: Job) => {
-    console.log("submit: ", data);
-    setJobs([...jobs, data]);
+    if(selected !== null){
+      var newJobs:Job[] = jobs;
+      newJobs[selected] = data
+      console.log('new jobs: ', newJobs);
+      
+      setJobs([...newJobs]);
+      setSelected(null)
+    }else setJobs([...jobs, data]);
   };
   const periodType = form.watch("periodType");
   const startDate = form.watch("startDate");
@@ -87,8 +93,17 @@ export default function JobForm() {
   }, [startDate, periodType]);
 
   useEffect(()=>{
-    if(selected){
-      form.reset(selected);
+    
+    if(selected !== null){
+      console.log('selected: ', jobs[selected]);
+      
+      var job:Job = {
+        ...jobs[selected],
+
+      }
+      form.reset({...jobs[selected],  startDate: new Date(jobs[selected].startDate), endDate: new Date(jobs[selected].endDate)});
+      form.setValue('type',JobType.CHOREOGRAPHER )
+      form.trigger();
     }
 
   },[selected])
@@ -310,7 +325,7 @@ export default function JobForm() {
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button type="submit">Add</Button>
-            {selected && <Button   >Edit</Button>}
+            {selected !== null && <Button type='submit'  >Edit</Button>}
           </CardFooter>
         </Card>
       </form>

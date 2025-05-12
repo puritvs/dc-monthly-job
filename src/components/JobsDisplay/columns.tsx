@@ -71,11 +71,12 @@ export const columns: ColumnDef<Job>[] = [
     cell: ({ row }) => {
       const { jobs, setJobs,setSelected } = useContext(JobsContext);
       const job = row.original;
-
+      
       return (
         <div>
          
-              <Button  variant='ghost' onClick={()=>setSelected(job)}  >
+              <Button  variant='ghost' onClick={()=>{                
+                setSelected(row.index)}}  >
                 <Pencil/>
               </Button>
           <Dialog>
