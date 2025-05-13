@@ -35,6 +35,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { JobType } from "@/lib/types/jobType";
 import { Job } from "@/lib/types/job";
 import { useContext, useEffect } from "react";
@@ -68,21 +69,21 @@ const defaultValues = {
   remark: "",
 };
 export default function JobForm() {
-  const { jobs, setJobs,selected,setSelected } = useContext(JobsContext);
+  const { jobs, setJobs, selected, setSelected } = useContext(JobsContext);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
 
   const onSubmit = async (data: Job) => {
-    if(selected !== null){
-      var newJobs:Job[] = jobs;
-      newJobs[selected] = data
-      console.log('new jobs: ', newJobs);
-      
+    if (selected !== null) {
+      var newJobs: Job[] = jobs;
+      newJobs[selected] = data;
+      console.log("new jobs: ", newJobs);
+
       setJobs([...newJobs]);
-      setSelected(null)
-    }else setJobs([...jobs, data]);
+      setSelected(null);
+    } else setJobs([...jobs, data]);
   };
   const periodType = form.watch("periodType");
   const startDate = form.watch("startDate");
@@ -92,43 +93,77 @@ export default function JobForm() {
     return () => {};
   }, [startDate, periodType]);
 
-  useEffect(()=>{
-    
-    if(selected !== null){
-      console.log('selected: ', jobs[selected]);
-      
-      var job:Job = {
-        ...jobs[selected],
+  useEffect(() => {
+    if (selected !== null) {
+      console.log("selected: ", jobs[selected]);
 
-      }
-      form.reset({...jobs[selected],  startDate: new Date(jobs[selected].startDate), endDate: new Date(jobs[selected].endDate)});
-      form.setValue('type',JobType.CHOREOGRAPHER )
+      var job: Job = {
+        ...jobs[selected],
+      };
+      form.reset({
+        ...jobs[selected],
+        startDate: new Date(jobs[selected].startDate),
+        endDate: new Date(jobs[selected].endDate),
+      });
       form.trigger();
     }
-
-  },[selected])
+  }, [selected]);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card className=" sm:m-2 md:m-5">
           <CardHeader>
-            <CardTitle>Add job</CardTitle>
+            <CardTitle>Job Information</CardTitle>
             <CardDescription>
-              add job list to create job summary
+              add/edit job list to create job summary
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
+                {/* <FormField
+                  control={form.control}
+                  name="type"
+                  render={({ field }) => (
+                    <FormItem className="space-y-3">
+                      <FormLabel>Job Type</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          className="flex flex-col space-y-1"
+                        >
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value={JobType.CHOREOGRAPHER} />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              Choreographer
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value={JobType.DANCER} />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              Dancer
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                /> */}
                 <FormField
                   control={form.control}
                   name="type"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Type</FormLabel>
+                      <FormLabel>Job Type</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -172,7 +207,7 @@ export default function JobForm() {
                       <FormLabel>Period Type</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -218,7 +253,6 @@ export default function JobForm() {
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
-                            
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
@@ -323,9 +357,9 @@ export default function JobForm() {
               />
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex justify-start space-x-1.5 ">
             <Button type="submit">Add</Button>
-            {selected !== null && <Button type='submit'  >Edit</Button>}
+            {selected !== null && <Button type="submit">Edit</Button>}
           </CardFooter>
         </Card>
       </form>
