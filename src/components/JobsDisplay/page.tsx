@@ -17,6 +17,7 @@ import { TimerReset } from "lucide-react";
 import { columns } from "./columns";
 import { JobRawTextDialog } from "../JobRawTextDialog/page";
 import JobImportButton from "../JobImportButton/page";
+import JobExportButton from "../JobExportButton/page";
 
 export default function JobsDisplay() {
   const { jobs, setJobs, setSelected } = useContext(JobsContext);
@@ -26,7 +27,7 @@ export default function JobsDisplay() {
       <Card className=" sm:m-2 md:m-5">
         <CardHeader>
           <CardTitle>
-            All jobs{" "}
+            All Jobs
             <Button
               variant="outline"
               onClick={() => {
@@ -40,7 +41,11 @@ export default function JobsDisplay() {
           <CardDescription>display all jobs</CardDescription>
         </CardHeader>
         <CardContent>
-          <JobImportButton />
+          <div className="flex space-x-1 ">
+            <JobExportButton />
+            <JobImportButton />
+          </div>
+
           <DataTable columns={columns} data={jobs} />
         </CardContent>
         <CardFooter>
