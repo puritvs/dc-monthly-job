@@ -57,7 +57,18 @@ export default function JobImportButton() {
       >
         Export .JSON
       </Button>
-      <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+      <Button
+        variant="outline"
+        onClick={() => {
+          if (fileInputRef.current) {
+            if (fileInputRef.current.value) {
+              fileInputRef.current.value = "";
+            }
+          }
+
+          fileInputRef.current?.click();
+        }}
+      >
         Import .JSON
       </Button>
       <Input
