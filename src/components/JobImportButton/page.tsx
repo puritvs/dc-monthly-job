@@ -60,6 +60,9 @@ export default function JobImportButton() {
       <Button
         variant="outline"
         onClick={() => {
+          /**
+           * reset file input so that it accepts the same file (a better solution might exists)
+           */
           if (fileInputRef.current) {
             if (fileInputRef.current.value) {
               fileInputRef.current.value = "";
