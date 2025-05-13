@@ -69,19 +69,23 @@ export const columns: ColumnDef<Job>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const { jobs, setJobs,setSelected } = useContext(JobsContext);
+      const { jobs, setJobs, setSelected, selected } = useContext(JobsContext);
       const job = row.original;
-      
+
       return (
         <div>
-         
-              <Button  variant='ghost' onClick={()=>{                
-                setSelected(row.index)}}  >
-                <Pencil/>
-              </Button>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setSelected(row.index);
+            }}
+            disabled={selected === row.index}
+          >
+            <Pencil />
+          </Button>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost">
+              <Button variant="ghost" disabled={selected === row.index}>
                 <Eye />
               </Button>
             </DialogTrigger>
@@ -111,15 +115,18 @@ export const columns: ColumnDef<Job>[] = [
               </DialogFooter>
             </DialogContent>
           </Dialog>
-          <Button variant='ghost' onClick={() => {
-                  const newJobs = jobs.filter(
-                    (data, index) => `${index}` !== row.id
-                  );
-                  setJobs(newJobs);
-                }}  >
-              <Trash/>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              const newJobs = jobs.filter(
+                (data, index) => `${index}` !== row.id
+              );
+              setJobs(newJobs);
+            }}
+            disabled={selected === row.index}
+          >
+            <Trash />
           </Button>
-          
         </div>
       );
     },

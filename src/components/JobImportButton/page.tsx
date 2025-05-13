@@ -8,7 +8,7 @@ import { Job } from "@/lib/types/job";
 
 export default function JobImportButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { jobs,setJobs } = useJobContext();
+  const { jobs, setJobs } = useJobContext();
 
   const onFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     var fileList: File[] =
@@ -19,34 +19,22 @@ export default function JobImportButton() {
     if (fileList.length >= 1) {
       console.log("file: ", fileList[0]);
     }
-    const fileReader = new FileReader()
+    const fileReader = new FileReader();
 
-    fileReader.readAsText(fileList[0])
+    fileReader.readAsText(fileList[0]);
 
-    fileReader.onloadend = (ev:ProgressEvent<FileReader>)=>{
-      
-      if(ev.target?.result){
-
-        var importedJobs:Job[] = JSON.parse(ev.target.result.toString()  );
+    fileReader.onloadend = (ev: ProgressEvent<FileReader>) => {
+      if (ev.target?.result) {
+        var importedJobs: Job[] = JSON.parse(ev.target.result.toString());
         console.log("imported: ", importedJobs);
         setJobs(importedJobs);
         toast.success("Import success", {
           description: "current jobs are replaced",
         });
       }
-       
-    }
+    };
     e.target.files = null;
-
-  
   };
-  // useEffect(()=>{
-
-  //   if(fileReader.result){
-  //     console.log(fileReader.result);
-      
-  //   }
-  // },[fileReader.result])
 
   return (
     <div className="flex space-x-1">

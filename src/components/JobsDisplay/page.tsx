@@ -19,7 +19,7 @@ import { JobRawTextDialog } from "../JobRawTextDialog/page";
 import JobImportButton from "../JobImportButton/page";
 
 export default function JobsDisplay() {
-  const { jobs, setJobs } = useContext(JobsContext);
+  const { jobs, setJobs, setSelected } = useContext(JobsContext);
 
   return (
     <>
@@ -27,7 +27,13 @@ export default function JobsDisplay() {
         <CardHeader>
           <CardTitle>
             All jobs{" "}
-            <Button variant="outline" onClick={() => setJobs([])}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setJobs([]);
+                setSelected(null);
+              }}
+            >
               Reset <TimerReset />
             </Button>
           </CardTitle>

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Pencil, PencilLine } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
@@ -35,7 +35,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { JobType } from "@/lib/types/jobType";
 import { Job } from "@/lib/types/job";
 import { useContext, useEffect } from "react";
@@ -82,8 +87,8 @@ export default function JobForm() {
       console.log("new jobs: ", newJobs);
 
       setJobs([...newJobs]);
-      setSelected(null);
     } else setJobs([...jobs, data]);
+    setSelected(null);
   };
   const periodType = form.watch("periodType");
   const startDate = form.watch("startDate");
@@ -113,7 +118,25 @@ export default function JobForm() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card className=" sm:m-2 md:m-5">
           <CardHeader>
-            <CardTitle>Job Information</CardTitle>
+            <CardTitle className="flex justify-between">
+              Job Information{" "}
+              {selected !== null ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <PencilLine size={15} />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Edit Mode</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <></>
+              )}
+            </CardTitle>
             <CardDescription>
               add/edit job list to create job summary
             </CardDescription>
@@ -121,40 +144,6 @@ export default function JobForm() {
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                {/* <FormField
-                  control={form.control}
-                  name="type"
-                  render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel>Job Type</FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          value={field.value}
-                          className="flex flex-col space-y-1"
-                        >
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value={JobType.CHOREOGRAPHER} />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              Choreographer
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value={JobType.DANCER} />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              Dancer
-                            </FormLabel>
-                          </FormItem>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
                 <FormField
                   control={form.control}
                   name="type"
@@ -357,9 +346,19 @@ export default function JobForm() {
               />
             </div>
           </CardContent>
-          <CardFooter className="flex justify-start space-x-1.5 ">
-            <Button type="submit">Add</Button>
-            {selected !== null && <Button type="submit">Edit</Button>}
+          <CardFooter className="flex justify-between">
+            <Button type="submit">Save</Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setSelected(null);
+                form.reset(defaultValues);
+                // form.trigger(["type", "startDate", "endDate"]);
+                // form.clearErrors(["name"]);
+              }}
+            >
+              Clear
+            </Button>
           </CardFooter>
         </Card>
       </form>
