@@ -16,11 +16,11 @@ const sortJobByStartDate = (a: Job, b: Job) => {
 };
 
 function rowToText(job: Job, index: number) {
-  return `${index + 1} ${format(job.startDate, "dd/MM/yyyy")} ${
+  return `${index + 1}) ${format(job.startDate, "dd/MM/yyyy")} ${
     job.periodType === PeriodType.PERIOD
       ? `- ${format(job.endDate, "dd/MM/yyyy")}`
       : ""
-  } ${job.name} ${job.remark ? `(${job.remark})` : ""}\n${job.description}\n`;
+  } ${job.name} ${job.remark ? `(${job.remark})` : ""}\n${job.description}\n\n`;
 }
 
 export function jobToText(jobs: Job[]) {
