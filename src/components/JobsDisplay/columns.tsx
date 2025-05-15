@@ -28,6 +28,7 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
+import JobDetailDialog from "../JobDetailDialog/page";
 export const columns: ColumnDef<Job>[] = [
   { accessorKey: "periodType", header: "Period" },
   {
@@ -83,38 +84,8 @@ export const columns: ColumnDef<Job>[] = [
           >
             <Pencil />
           </Button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="ghost" disabled={selected === row.index}>
-                <Eye />
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{job.name} </DialogTitle>
-                <DialogDescription>{job.type}</DialogDescription>
-              </DialogHeader>
-              <div className="flex flex-col">
-                <Label>
-                  {format(job.startDate, "dd/MM/yyyy")}{" "}
-                  {job.periodType === PeriodType.PERIOD &&
-                    `- ${format(job.endDate, "dd/MM/yyyy")}`}
-                </Label>
-                <Separator className="my-4" />
-                <pre>{job.description} </pre>
-                <Separator className="my-4" />
+          <JobDetailDialog job={job} disabled={selected === row.index} />
 
-                <span>{job.remark}</span>
-              </div>
-              <DialogFooter className="sm:justify-start">
-                <DialogClose asChild>
-                  <Button type="button" variant="secondary">
-                    Close
-                  </Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
           <Button
             variant="ghost"
             onClick={() => {

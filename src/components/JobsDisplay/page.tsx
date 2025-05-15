@@ -13,30 +13,61 @@ import {
 
 import { DataTable } from "./dataTable";
 import { Button } from "../ui/button";
-import { TimerReset } from "lucide-react";
+import { TimerReset, TriangleAlert } from "lucide-react";
 import { columns } from "./columns";
 import { JobRawTextDialog } from "../JobRawTextDialog/page";
 import JobImportButton from "../JobImportButton/page";
 import JobExportButton from "../JobExportButton/page";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 export default function JobsDisplay() {
   const { jobs, setJobs, setSelected } = useContext(JobsContext);
 
+  const onReset = () => {
+    setJobs([]);
+    setSelected(null);
+  };
   return (
     <>
       <Card className=" sm:m-2 md:m-5">
         <CardHeader>
-          <CardTitle>
+          <CardTitle className="flex justify-between ">
             All Jobs
-            <Button
-              variant="outline"
-              onClick={() => {
-                setJobs([]);
-                setSelected(null);
-              }}
-            >
+            {/* <Button variant="destructive" onClick={onReset}>
               Reset <TimerReset />
-            </Button>
+            </Button> */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive">
+                  Reset <TimerReset />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. Make sure you download your
+                    progress as .JSON file before you delete the list
+                    permanently
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={onReset}>
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardTitle>
           <CardDescription>display all jobs</CardDescription>
         </CardHeader>
