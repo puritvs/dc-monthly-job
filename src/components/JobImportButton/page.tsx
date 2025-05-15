@@ -14,7 +14,6 @@ export default function JobImportButton() {
     var fileList: File[] =
       e.currentTarget.files === null ? [] : Array.from(e.currentTarget.files);
 
-
     const fileReader = new FileReader();
 
     fileReader.readAsText(fileList[0]);
@@ -33,7 +32,6 @@ export default function JobImportButton() {
 
   return (
     <div className="flex space-x-1">
-      
       <Button
         variant="outline"
         onClick={() => {
