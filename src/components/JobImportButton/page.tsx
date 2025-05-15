@@ -34,25 +34,6 @@ export default function JobImportButton() {
     <div className="flex space-x-1">
       <Button
         variant="outline"
-        onClick={async () => {
-          var result = await fetch("api/jobs", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(jobs),
-          });
-          if (result.status === 200) {
-            toast.success("Progress saved", {
-              description: "saved to .JSON file",
-            });
-          }
-        }}
-      >
-        Export .JSON
-      </Button>
-      <Button
-        variant="outline"
         onClick={() => {
           /**
            * reset file input so that it accepts the same file (a better solution might exists)

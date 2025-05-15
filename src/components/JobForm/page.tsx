@@ -317,6 +317,7 @@ export default function JobForm() {
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea
+                        className=" h-40  overflow-scroll "
                         placeholder="Type your job details here..."
                         {...field}
                       />
