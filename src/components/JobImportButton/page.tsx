@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useRef } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useJobContext } from "@/contexts/jobsContext";
@@ -8,7 +8,7 @@ import { Job } from "@/lib/types/job";
 
 export default function JobImportButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { jobs, setJobs } = useJobContext();
+  const { setJobs } = useJobContext();
 
   const onFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     var fileList: File[] =

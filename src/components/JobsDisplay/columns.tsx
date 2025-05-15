@@ -2,32 +2,13 @@ import { Job } from "@/lib/types/job";
 import { PeriodType } from "@/lib/types/periodType";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Trash, ArrowUpDown, Pencil, Eye } from "lucide-react";
-import { MoreHorizontal } from "lucide-react";
+import { Trash, ArrowUpDown, Pencil } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
 import { useContext } from "react";
 import { JobsContext } from "@/contexts/jobsContext";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
-import { DialogClose } from "@radix-ui/react-dialog";
-import { Label } from "../ui/label";
-import { Separator } from "../ui/separator";
 import JobDetailDialog from "../JobDetailDialog/page";
 export const columns: ColumnDef<Job>[] = [
   { accessorKey: "periodType", header: "Period" },

@@ -38,13 +38,10 @@ export default function JobsDisplay() {
   };
   return (
     <>
-      <Card className=" sm:m-2 md:m-5">
+      <Card className=" sm:m-2 md:m-5 min-w-250 ">
         <CardHeader>
           <CardTitle className="flex justify-between ">
             All Jobs
-            {/* <Button variant="destructive" onClick={onReset}>
-              Reset <TimerReset />
-            </Button> */}
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive">

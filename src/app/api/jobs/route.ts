@@ -8,9 +8,7 @@ export async function POST(request: Request) {
   try {
     const result = fs.writeFile("./test.json", JSON.stringify(data), (err) => {
       console.log("save file error: ", err);
-      //   if (err) throw err;
     });
-    console.log("save success: ", result);
     return NextResponse.json("Success");
   } catch (err) {
     return NextResponse.json(`Error: ${err}`);

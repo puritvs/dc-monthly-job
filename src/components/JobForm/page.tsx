@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
-import { CalendarIcon, Pencil, PencilLine } from "lucide-react";
+import { CalendarIcon, PencilLine } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
@@ -51,7 +51,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PeriodType } from "@/lib/types/periodType";
-import { describe } from "node:test";
 import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
@@ -100,11 +99,6 @@ export default function JobForm() {
 
   useEffect(() => {
     if (selected !== null) {
-      console.log("selected: ", jobs[selected]);
-
-      var job: Job = {
-        ...jobs[selected],
-      };
       form.reset({
         ...jobs[selected],
         startDate: new Date(jobs[selected].startDate),
