@@ -34,12 +34,8 @@ export const columns: ColumnDef<Job>[] = [
 
     filterFn: (row, columnId, filterValue) => {
       if (filterValue === null) return true;
-      console.log("filter val: ", filterValue);
       const startDate: Date = row.original.startDate;
       var month = getMonth(startDate) + 1;
-      console.log("startDate: ", startDate);
-      console.log("getMonth: ", month);
-
       if (month.toString() === filterValue) return true;
       return false;
     },
