@@ -43,6 +43,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
   const table = useReactTable({
     data,
     columns,
@@ -86,6 +87,37 @@ export function DataTable<TData, TValue>({
                 Choreographer
               </SelectItem>
               <SelectItem value={JobType.DANCER}>Dancer</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select
+          value={
+            (table.getColumn("startDate")?.getFilterValue() as string) ?? ""
+          }
+          onValueChange={(value) => {
+            if (value === "All")
+              table.getColumn("startDate")?.setFilterValue(null);
+            else table.getColumn("startDate")?.setFilterValue(value);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter By Month" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="All">All</SelectItem>
+              <SelectItem value={"1"}>1 - Jan</SelectItem>
+              <SelectItem value={"2"}>2 - Feb</SelectItem>
+              <SelectItem value={"3"}>3 - Mar</SelectItem>
+              <SelectItem value={"4"}>4 - Apr</SelectItem>
+              <SelectItem value={"5"}>5 - May</SelectItem>
+              <SelectItem value={"6"}>6 - Jun</SelectItem>
+              <SelectItem value={"7"}>7 - Jul</SelectItem>
+              <SelectItem value={"8"}>8 - Aug</SelectItem>
+              <SelectItem value={"9"}>9 - Sep</SelectItem>
+              <SelectItem value={"10"}>10 - Oct</SelectItem>
+              <SelectItem value={"11"}>11 - Nov</SelectItem>
+              <SelectItem value={"12"}>12 - Dec</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

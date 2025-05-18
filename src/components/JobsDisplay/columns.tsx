@@ -1,7 +1,7 @@
 import { Job } from "@/lib/types/job";
 import { PeriodType } from "@/lib/types/periodType";
-import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
+import { ColumnDef, FilterFn } from "@tanstack/react-table";
+import { format, getMonth } from "date-fns";
 import { Trash, ArrowUpDown, Pencil } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { JobsContext } from "@/contexts/jobsContext";
 
 import JobDetailDialog from "../JobDetailDialog/page";
+
 export const columns: ColumnDef<Job>[] = [
   { accessorKey: "periodType", header: "Period" },
   {
@@ -29,6 +30,18 @@ export const columns: ColumnDef<Job>[] = [
       const startDate: Date = row.getValue("startDate");
       const formatted = format(startDate, "dd/MM/uuuu");
       return formatted;
+    },
+
+    filterFn: (row, columnId, filterValue) => {
+      if (filterValue === null) return true;
+      console.log("filter val: ", filterValue);
+      const startDate: Date = row.original.startDate;
+      var month = getMonth(startDate) + 1;
+      console.log("startDate: ", startDate);
+      console.log("getMonth: ", month);
+
+      if (month.toString() === filterValue) return true;
+      return false;
     },
   },
   {
