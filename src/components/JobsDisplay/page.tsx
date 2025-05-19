@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { DataTable } from "./dataTable";
 import { Button } from "../ui/button";
-import { TimerReset, TriangleAlert } from "lucide-react";
+import { TimerReset, TriangleAlert, UserRound } from "lucide-react";
 import { columns } from "./columns";
 import { JobRawTextDialog } from "../JobRawTextDialog/page";
 import JobImportButton from "../JobImportButton/page";
@@ -30,6 +30,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import LoginDialog from "../LoginDialog/page";
 export default function JobsDisplay() {
   const { jobs, setJobs, setSelected } = useContext(JobsContext);
 
@@ -43,29 +44,12 @@ export default function JobsDisplay() {
         <CardHeader>
           <CardTitle className="flex justify-between ">
             All Jobs
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive">
-                  Reset <TimerReset />
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. Make sure you download your
-                    progress as .JSON file before you delete the list
-                    permanently
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={onReset}>
-                    Continue
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            <div className="flex  items-center  space-x-2 ">
+              {/* <Button className="ml-2" variant="outline">
+                <UserRound /> Login
+              </Button> */}
+              <LoginDialog />
+            </div>
           </CardTitle>
           <CardDescription>display all jobs</CardDescription>
         </CardHeader>
@@ -80,8 +64,31 @@ export default function JobsDisplay() {
           </div>
           <DataTable columns={columns} data={jobs} />
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex items-center justify-between  ">
           <JobRawTextDialog />
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive">
+                <TimerReset />
+                Reset
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. Make sure you download your
+                  progress as .JSON file before you delete the list permanently
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={onReset}>
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardFooter>
       </Card>
     </>

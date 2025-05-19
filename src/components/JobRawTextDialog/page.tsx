@@ -51,7 +51,8 @@ export function JobRawTextDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          Raw Text <PenTool />{" "}
+          <PenTool />
+          Raw Text
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -73,50 +74,6 @@ export function JobRawTextDialog() {
           type="file"
           onChange={onFileSelect}
         />
-        {/* <Button>Save</Button> */}
-        {/* <ScrollArea className=" h-full  w-fit ">
-          {jobs
-            .sort((a: Job, b: Job) => sortByStartDate(a, b))
-            .filter((job) => job.type === JobType.CHOREOGRAPHER)
-            .map((job, index) => (
-              <div key={`${index}`}>
-                <span className=" mr-5 ">{index + 1}</span>
-
-                <span>
-                  {format(job.startDate, "dd/MM/yyyy")}{" "}
-                  {job.periodType === PeriodType.PERIOD &&
-                    `- ${format(job.endDate, "dd/MM/yyyy")}`}{" "}
-                </span>
-                <span>{job.name}</span>
-                <span> {` (${job.remark})`}</span>
-                <br />
-                <pre className=" ml-5 ">{job.description}</pre>
-              </div>
-            ))}
-          <Separator className="my-5" />
-          <Label>{JobType.DANCER}</Label>
-
-          {jobs
-            .sort((a: Job, b: Job) => sortByStartDate(a, b))
-            .filter((job) => job.type === JobType.DANCER)
-            .map((job, index) => (
-              <div key={`${index}`}>
-                <span className=" mr-5 ">{index + 1}</span>
-                <span>
-                  {format(job.startDate, "dd/MM/yyyy")}{" "}
-                  {job.periodType === PeriodType.PERIOD &&
-                    `- ${format(job.endDate, "dd/MM/yyyy")}`}{" "}
-                </span>
-                <span>{job.name}</span>
-                <span> {` (${job.remark})`}</span>
-                <br />
-                <pre className=" ml-5 ">{job.description}</pre>
-              </div>
-            ))}
-        </ScrollArea> */}
-        {/* <DialogFooter>
-          <Button>Copy</Button>
-        </DialogFooter> */}
       </DialogContent>
     </Dialog>
   );
