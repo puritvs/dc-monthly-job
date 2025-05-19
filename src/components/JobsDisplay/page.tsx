@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 import { DataTable } from "./dataTable";
 import { Button } from "../ui/button";
@@ -69,11 +70,14 @@ export default function JobsDisplay() {
           <CardDescription>display all jobs</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex space-x-1 ">
+          {/* <div className="flex h-5 items-center space-x-4 text-sm"> */}
+
+          <div className="flex h-5 items-center  space-x-1 ">
             <JobExportButton />
             <JobImportButton />
+            <Separator orientation="vertical" className="  mx-5 " />
+            <p>Save to Cloud</p>
           </div>
-
           <DataTable columns={columns} data={jobs} />
         </CardContent>
         <CardFooter>

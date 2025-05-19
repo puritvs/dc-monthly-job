@@ -61,7 +61,8 @@ export function JobRawTextDialog() {
         </DialogHeader>
 
         <Textarea
-          className="w-full h -9/12 "
+          className="w-full min-h-100"
+          spellCheck={false}
           defaultValue={jobToText(jobs)}
           // disabled={true}
         />
