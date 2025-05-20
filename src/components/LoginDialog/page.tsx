@@ -20,7 +20,8 @@ import { useEffect } from "react";
 export default function LoginDialog() {
   const fetchAccount = async () => {
     const result = await fetch("/api/accounts");
-    console.log("fetch result: ", result);
+
+    console.log("fetch result: ", await result.json());
   };
 
   useEffect(() => {

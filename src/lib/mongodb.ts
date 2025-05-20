@@ -13,6 +13,7 @@ export async function connectToMongoDB() {
       throw new Error("MONGODB_URI is not defined in .env.local");
     }
     const newConnection = await mongoose.connect(uri);
+
     cachedConnection = newConnection.connection;
     return cachedConnection;
   } catch (error) {
