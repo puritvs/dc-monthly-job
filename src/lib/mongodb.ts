@@ -12,7 +12,8 @@ export async function connectToMongoDB() {
     if (!uri) {
       throw new Error("MONGODB_URI is not defined in .env.local");
     }
-    const newConnection = await mongoose.connect(uri);
+    const newConnection = await mongoose.connect(uri, { dbName: "DCJob" });
+    // console.log("new connection: ", newConnection.connection.db);
 
     cachedConnection = newConnection.connection;
     return cachedConnection;

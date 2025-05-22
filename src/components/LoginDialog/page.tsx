@@ -24,9 +24,9 @@ export default function LoginDialog() {
     console.log("fetch result: ", await result.json());
   };
 
-  useEffect(() => {
-    fetchAccount();
-  }, []);
+  // useEffect(() => {
+  //   fetchAccount();
+  // }, []);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -43,6 +43,7 @@ export default function LoginDialog() {
         </DialogHeader>
         <div className="flex flex-col"></div>
         <DialogFooter className="sm:justify-start">
+          <Button onClick={fetchAccount}>Login</Button>
           <DialogClose asChild>
             <Button type="button" variant="secondary">
               Close

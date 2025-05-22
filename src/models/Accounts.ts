@@ -9,16 +9,19 @@ interface IAccount extends Document {
   nickname: string;
 }
 
-const AccountSchema: Schema = new Schema({
-  _id: { type: ObjectId, required: true, unique: true },
-  username: { type: String, required: true },
-  password: { type: String, required: true },
+const AccountSchema: Schema = new Schema(
+  {
+    _id: { type: ObjectId, required: true, unique: true },
+    username: { type: String, required: true },
+    password: { type: String, required: true },
 
-  name: { type: String, required: true },
-  surname: { type: String, required: true },
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
 
-  nickname: { type: String, required: true, unique: true },
-});
+    nickname: { type: String, required: true, unique: true },
+  },
+  { collection: "Accounts" }
+);
 
 const Accounts =
   mongoose.models.Accounts ||

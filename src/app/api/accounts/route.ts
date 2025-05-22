@@ -3,16 +3,17 @@ import Accounts from "@/models/Accounts";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const connection = await connectToMongoDB();
+  await connectToMongoDB();
 
   try {
-    if (connection !== undefined) {
-      const res = await Accounts.find({});
-      var test = await connection.db?.collection("Accounts").find({});
-      console.log("test: ", test);
+    // var res = connection.model("Accounts").findOne({ name: "Purit" });
+    // console.log(await res.exec());
 
-      return NextResponse.json(res);
-    }
+    const res = await Accounts.find({}).exec();
+    console.log("res: ", res);
+    // console.log("test: ", connection.models);
+
+    return NextResponse.json(res);
   } catch (error) {
     console.log("error: ", error);
   }
