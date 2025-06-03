@@ -30,6 +30,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
+import Accounts from "@/models/Accounts";
 const formSchema = z.object({
   username: z.string({ required_error: "username required" }),
   password: z.string({ required_error: "password required" }),
@@ -45,6 +46,7 @@ export default function LoginDialog() {
       body: JSON.stringify({ username, password }),
     });
     console.log("res: ", await res.json());
+    var user = res.json();
   };
 
   return (

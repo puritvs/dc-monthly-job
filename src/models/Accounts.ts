@@ -1,7 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
-import { ObjectId } from "mongodb";
+import mongoose, { Schema, Document, Types } from "mongoose";
 interface IAccount extends Document {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   username: string;
   password: string;
   name: string;
@@ -11,7 +10,7 @@ interface IAccount extends Document {
 
 const AccountSchema: Schema = new Schema(
   {
-    _id: { type: ObjectId, required: true, unique: true },
+    _id: { type: Types.ObjectId, required: true, unique: true },
     username: { type: String, required: true },
     password: { type: String, required: true },
 
