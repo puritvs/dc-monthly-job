@@ -16,7 +16,7 @@ import { Job } from "@/lib/types/job";
 import { format } from "date-fns";
 import { PeriodType } from "@/lib/types/periodType";
 import { Badge } from "../ui/badge";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -30,13 +30,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
-import Accounts from "@/models/Accounts";
+import Accounts, { IAccount } from "@/models/Accounts";
+import { UserContext, useUserContext } from "@/contexts/userContext";
 const formSchema = z.object({
   username: z.string({ required_error: "username required" }),
   password: z.string({ required_error: "password required" }),
 });
 
 export default function LoginDialog() {
+  const { storeUser } = useUserContext();
+  const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -45,17 +48,19 @@ export default function LoginDialog() {
       method: "POST",
       body: JSON.stringify({ username, password }),
     });
-    console.log("res: ", await res.json());
-    var user = res.json();
+    const result: IAccount = await res.json();
+
+    storeUser(result);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="ghost">
-          <UserRound />
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      {/* <DialogTrigger asChild> */}
+      <Button variant="ghost" onClick={() => setOpen(true)}>
+        <UserRound />
+      </Button>
+      {/* </DialogTrigger> */}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>

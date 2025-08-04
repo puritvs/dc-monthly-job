@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import JobsProvider from "@/contexts/jobsContext";
 import { Toaster } from "sonner";
+import UserProvider from "@/contexts/userContext";
 
 export const metadata: Metadata = {
   title: "DC-Monthly-Job",
@@ -25,7 +26,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <JobsProvider>{children}</JobsProvider>
+          <UserProvider>
+            <JobsProvider>{children}</JobsProvider>
+          </UserProvider>
         </ThemeProvider>
         <Toaster />
       </body>

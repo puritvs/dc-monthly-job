@@ -9,6 +9,7 @@ interface IJob extends Document {
   endDate: string;
   description: string;
   remark: string;
+  userId: ObjectId;
 }
 
 const JobSchema: Schema = new Schema(
@@ -23,11 +24,11 @@ const JobSchema: Schema = new Schema(
     endDate: { type: String, required: true },
     description: { type: String, required: true },
     remark: { type: String, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "Accounts" },
   },
   { collection: "Jobs" }
 );
 
-const Accounts =
-  mongoose.models.Jobs || mongoose.model<IJob>("Jobs", JobSchema);
+const Jobs = mongoose.models.Jobs || mongoose.model<IJob>("Jobs", JobSchema);
 
-export default Accounts;
+export default Jobs;

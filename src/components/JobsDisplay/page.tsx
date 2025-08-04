@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { DataTable } from "./dataTable";
 import { Button } from "../ui/button";
-import { TimerReset, TriangleAlert, UserRound } from "lucide-react";
+import { Power, TimerReset, TriangleAlert, UserRound } from "lucide-react";
 import { columns } from "./columns";
 import { JobRawTextDialog } from "../JobRawTextDialog/page";
 import JobImportButton from "../JobImportButton/page";
@@ -31,9 +31,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import LoginDialog from "../LoginDialog/page";
+import { useUserContext } from "@/contexts/userContext";
 export default function JobsDisplay() {
   const { jobs, setJobs, setSelected } = useContext(JobsContext);
-
+  const { user, clearUser } = useUserContext();
   const onReset = () => {
     setJobs([]);
     setSelected(null);
@@ -48,7 +49,14 @@ export default function JobsDisplay() {
               {/* <Button className="ml-2" variant="outline">
                 <UserRound /> Login
               </Button> */}
-              <LoginDialog />
+              {user ? <p>{user.username}</p> : <></>}
+              {user === null ? (
+                <LoginDialog />
+              ) : (
+                <Button onClick={clearUser} variant="ghost">
+                  <Power />
+                </Button>
+              )}
             </div>
           </CardTitle>
           <CardDescription>display all jobs</CardDescription>
