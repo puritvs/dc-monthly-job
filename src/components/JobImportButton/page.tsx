@@ -21,6 +21,8 @@ export default function JobImportButton() {
     fileReader.onloadend = (ev: ProgressEvent<FileReader>) => {
       if (ev.target?.result) {
         var importedJobs: Job[] = JSON.parse(ev.target.result.toString());
+        console.log(importedJobs);
+
         setJobs(importedJobs);
         toast.success("Import success", {
           description: "current jobs are replaced",

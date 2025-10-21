@@ -8,9 +8,21 @@ export async function POST(request: Request) {
   const data = await request.json();
   try {
     await connectToMongoDB();
-    const jobs = await Jobs.find({
-      id: data._id,
-    });
+    const jobs = await Jobs.find(
+      {
+        id: data._id,
+      },
+      {
+        type: 1,
+        name: 1,
+        periodType: 1,
+        startDate: 1,
+        endDate: 1,
+        description: 1,
+        remark: 1,
+        _id: 0,
+      }
+    );
     // console.log(jobs);
 
     // const result = fs.writeFile("./test.json", JSON.stringify(data), (err) => {

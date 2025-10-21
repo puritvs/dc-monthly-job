@@ -24,9 +24,11 @@ import { z } from "zod";
 import { Input } from "../ui/input";
 import { IAccount } from "@/models/Accounts";
 import { useUserContext } from "@/contexts/userContext";
+import { useJobContext } from "@/contexts/jobsContext";
 
 export default function TestCloudButton() {
   const { user } = useUserContext();
+  const { setJobs } = useJobContext();
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,10 +40,11 @@ export default function TestCloudButton() {
 
       body: JSON.stringify({ ...user }),
     });
+    console.log("res: ", res);
 
-    const result: Job[] = await res.json();
+    const result: Job[] = JSON.parse(await res.json());
     console.log("result: ", result);
-
+    setJobs(result);
     // const result: IAccount = await res.json();
 
     // storeUser(result);
