@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { DataTable } from "./dataTable";
 import { Button } from "../ui/button";
-import { Power, TimerReset, TriangleAlert, UserRound } from "lucide-react";
+import { Power, TimerReset } from "lucide-react";
 import { columns } from "./columns";
 import { JobRawTextDialog } from "../JobRawTextDialog/page";
 import JobImportButton from "../JobImportButton/page";
@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import LoginDialog from "../LoginDialog/page";
 import { useUserContext } from "@/contexts/userContext";
+import TestCloudButton from "../TestCloudButton/page";
 export default function JobsDisplay() {
   const { jobs, setJobs, setSelected } = useContext(JobsContext);
   const { user, clearUser } = useUserContext();
@@ -39,6 +40,7 @@ export default function JobsDisplay() {
     setJobs([]);
     setSelected(null);
   };
+
   return (
     <>
       <Card className=" sm:m-2 md:m-5 min-w-250 ">
@@ -68,6 +70,8 @@ export default function JobsDisplay() {
             <JobExportButton />
             <JobImportButton />
             <Separator orientation="vertical" className="  mx-5 " />
+            <TestCloudButton />
+
             <p>Save to Cloud</p>
           </div>
           <DataTable columns={columns} data={jobs} />

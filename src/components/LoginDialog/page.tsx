@@ -20,22 +20,10 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+
 import { Input } from "../ui/input";
-import Accounts, { IAccount } from "@/models/Accounts";
-import { UserContext, useUserContext } from "@/contexts/userContext";
-const formSchema = z.object({
-  username: z.string({ required_error: "username required" }),
-  password: z.string({ required_error: "password required" }),
-});
+import { IAccount } from "@/models/Accounts";
+import { useUserContext } from "@/contexts/userContext";
 
 export default function LoginDialog() {
   const { storeUser } = useUserContext();
