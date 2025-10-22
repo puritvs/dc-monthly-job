@@ -32,7 +32,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import LoginDialog from "../LoginDialog/page";
 import { useUserContext } from "@/contexts/userContext";
-import TestCloudButton from "../TestCloudButton/page";
+import FetchCloudButton from "../FetchCloudButton/page";
+import SaveCloudButton from "../SaveCloudButton/page";
 export default function JobsDisplay() {
   const { jobs, setJobs, setSelected } = useContext(JobsContext);
   const { user, clearUser } = useUserContext();
@@ -70,9 +71,9 @@ export default function JobsDisplay() {
             <JobExportButton />
             <JobImportButton />
             <Separator orientation="vertical" className="  mx-5 " />
-            <TestCloudButton />
+            <FetchCloudButton />
 
-            <p>Save to Cloud</p>
+            <SaveCloudButton />
           </div>
           <DataTable columns={columns} data={jobs} />
         </CardContent>

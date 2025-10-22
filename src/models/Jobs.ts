@@ -9,12 +9,12 @@ interface IJob extends Document {
   endDate: string;
   description: string;
   remark: string;
-  userId: ObjectId;
+  userId: string;
 }
 
 const JobSchema: Schema = new Schema(
   {
-    _id: { type: ObjectId, required: true, unique: true },
+    _id: { type: ObjectId, unique: true },
     type: { type: String, required: true },
     name: { type: String, required: true },
 
@@ -24,7 +24,7 @@ const JobSchema: Schema = new Schema(
     endDate: { type: String, required: true },
     description: { type: String, required: true },
     remark: { type: String, required: true },
-    userId: { type: Schema.Types.ObjectId, ref: "Accounts" },
+    userId: { type: String, required: true },
   },
   { collection: "Jobs" }
 );

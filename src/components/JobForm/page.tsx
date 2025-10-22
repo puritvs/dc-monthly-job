@@ -62,6 +62,7 @@ const formSchema = z.object({
   endDate: z.date({ required_error: "job start date is required" }),
   description: z.string(),
   remark: z.string(),
+  _id: z.string(),
 });
 const defaultValues = {
   type: JobType.DANCER,
@@ -71,6 +72,7 @@ const defaultValues = {
   endDate: new Date(),
   description: "",
   remark: "",
+  _id: "",
 };
 export default function JobForm() {
   const { jobs, setJobs, selected, setSelected } = useContext(JobsContext);
@@ -333,6 +335,22 @@ export default function JobForm() {
                     <FormLabel>Remark</FormLabel>
                     <FormControl>
                       <Input {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="_id"
+                render={({ field }) => (
+                  <FormItem>
+                    {/* <FormLabel>_id</FormLabel> */}
+                    <FormControl>
+                      <Input hidden={true} {...field} />
                     </FormControl>
 
                     <FormMessage />

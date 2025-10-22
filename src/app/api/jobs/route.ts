@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     await connectToMongoDB();
     const jobs = await Jobs.find(
       {
-        id: data._id,
+        userId: data._id.toString(),
       },
       {
         type: 1,
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         endDate: 1,
         description: 1,
         remark: 1,
-        _id: 0,
+        _id: 1,
       }
     );
     // console.log(jobs);
