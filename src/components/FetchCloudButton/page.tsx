@@ -7,10 +7,11 @@ import { toast } from "sonner";
 
 export default function FetchCloudButton() {
   const { user } = useUserContext();
-  const { setJobs } = useJobContext();
+  const { loading, setLoading, setJobs } = useJobContext();
 
   const onClick = async () => {
     if (user === null) return;
+    setLoading(true);
     const res = await fetch("api/jobs", {
       method: "POST",
 
@@ -18,12 +19,22 @@ export default function FetchCloudButton() {
     });
     console.log("res: ", res);
 
-    const result: Job[] = JSON.parse(await res.json());
-    console.log("result: ");
-    setJobs(result);
-    toast.success("Fetch success", {
-      description: "data fetched from cloud",
-    });
+    if (res.ok === true) {
+      var result: Job[] = JSON.parse(await res.json());
+      console.log("result: ");
+
+      setJobs(result);
+      toast.success("Fetch success", {
+        description: "data fetched from cloud",
+      });
+      setLoading(false);
+    } else {
+      console.log(res);
+
+      toast.error("Error", {
+        description: "",
+      });
+    }
     // const result: IAccount = await res.json();
 
     // storeUser(result);

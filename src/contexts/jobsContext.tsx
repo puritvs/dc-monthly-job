@@ -14,11 +14,15 @@ export const JobsContext = createContext<{
   setJobs: Dispatch<SetStateAction<Job[]>>;
   selected: number | null;
   setSelected: Dispatch<SetStateAction<number | null>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }>({
   jobs: [],
   setJobs: () => {},
   selected: null,
   setSelected: () => {},
+  loading: false,
+  setLoading: () => {},
 });
 
 export default function JobsProvider({
@@ -28,8 +32,12 @@ export default function JobsProvider({
 }) {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
   return (
-    <JobsContext.Provider value={{ jobs, setJobs, selected, setSelected }}>
+    <JobsContext.Provider
+      value={{ jobs, setJobs, selected, setSelected, loading, setLoading }}
+    >
       {children}
     </JobsContext.Provider>
   );
