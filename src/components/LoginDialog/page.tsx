@@ -32,6 +32,8 @@ export default function LoginDialog() {
   const [password, setPassword] = useState("");
 
   const onSubmit = async () => {
+    console.log("submitted");
+
     const res = await fetch("api/login", {
       method: "POST",
       body: JSON.stringify({ username, password }),
@@ -56,31 +58,30 @@ export default function LoginDialog() {
             <Badge>Authentication</Badge>
           </DialogDescription>
         </DialogHeader>
+        <form className="w-full max-w-sm" onSubmit={onSubmit}>
+          <div className="flex flex-col space-y-1.5">
+            <Input
+              placeholder="username"
+              value={username}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setUsername(e.target.value);
+              }}
+            ></Input>
+          </div>
+          <div className="flex flex-col space-y-1.5">
+            <Input
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setPassword(e.target.value);
+              }}
+            ></Input>
+          </div>
 
-        <div className="flex flex-col space-y-1.5">
-          <Input
-            placeholder="username"
-            value={username}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setUsername(e.target.value);
-            }}
-          ></Input>
-        </div>
-        <div className="flex flex-col space-y-1.5">
-          <Input
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setPassword(e.target.value);
-            }}
-          ></Input>
-        </div>
-
-        <div className="flex flex-col"></div>
-        <DialogFooter className="sm:justify-start">
-          <Button onClick={onSubmit}>Login</Button>
-        </DialogFooter>
+          <Button type="submit">Login</Button>
+        </form>
+        <DialogFooter className="sm:justify-start"></DialogFooter>
       </DialogContent>
     </Dialog>
   );
