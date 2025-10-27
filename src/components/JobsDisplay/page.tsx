@@ -34,8 +34,9 @@ import LoginDialog from "../LoginDialog/page";
 import { useUserContext } from "@/contexts/userContext";
 import FetchCloudButton from "../FetchCloudButton/page";
 import SaveCloudButton from "../SaveCloudButton/page";
+import { Spinner } from "../ui/spinner";
 export default function JobsDisplay() {
-  const { jobs, setJobs, setSelected } = useContext(JobsContext);
+  const { jobs, setJobs, setSelected, loading } = useContext(JobsContext);
   const { user, clearUser } = useUserContext();
   const onReset = () => {
     setJobs([]);
@@ -56,7 +57,13 @@ export default function JobsDisplay() {
               {user === null ? (
                 <LoginDialog />
               ) : (
-                <Button onClick={clearUser} variant="ghost">
+                <Button
+                  onClick={() => {
+                    clearUser();
+                    setJobs([]);
+                  }}
+                  variant="ghost"
+                >
                   <Power />
                 </Button>
               )}
@@ -75,6 +82,8 @@ export default function JobsDisplay() {
 
             <SaveCloudButton />
           </div>
+          {/* <Spinner /> */}
+
           <DataTable columns={columns} data={jobs} />
         </CardContent>
         <CardFooter className="flex items-center justify-between  ">

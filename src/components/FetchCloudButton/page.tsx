@@ -4,6 +4,8 @@ import { Job } from "@/lib/types/job";
 import { useUserContext } from "@/contexts/userContext";
 import { useJobContext } from "@/contexts/jobsContext";
 import { toast } from "sonner";
+import { Spinner } from "../ui/spinner";
+import { CloudDownloadIcon } from "lucide-react";
 
 export default function FetchCloudButton() {
   const { user } = useUserContext();
@@ -35,19 +37,16 @@ export default function FetchCloudButton() {
         description: "",
       });
     }
-    // const result: IAccount = await res.json();
-
-    // storeUser(result);
-    // setOpen(false);
   };
 
   return (
     <Button
       onClick={onClick}
-      variant="secondary"
-      disabled={user === null ? true : false}
+      variant="outline"
+      disabled={user === null || loading ? true : false}
     >
-      Fetch from Cloud
+      {loading ? <Spinner /> : <CloudDownloadIcon />}
+      Fetch
     </Button>
   );
 }
