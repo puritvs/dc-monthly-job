@@ -1,6 +1,5 @@
 import { useJobContext } from "@/contexts/jobsContext";
 import { useUserContext } from "@/contexts/userContext";
-import { connectToMongoDB } from "@/lib/mongodb";
 import { Job } from "@/lib/types/job";
 import { useEffect } from "react";
 import { JobStatus } from "@/lib/types/jobStatus";
