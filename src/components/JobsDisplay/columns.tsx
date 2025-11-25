@@ -10,6 +10,8 @@ import { useContext } from "react";
 import { JobsContext } from "@/contexts/jobsContext";
 
 import JobDetailDialog from "../JobDetailDialog/page";
+import { useUserContext } from "@/contexts/userContext";
+import useJobDB from "@/app/hooks/useJobDB";
 
 export const columns: ColumnDef<Job>[] = [
   { accessorKey: "periodType", header: "Period" },
@@ -61,6 +63,9 @@ export const columns: ColumnDef<Job>[] = [
     id: "actions",
     cell: ({ row }) => {
       const { jobs, setJobs, setSelected, selected } = useContext(JobsContext);
+      const { user } = useUserContext();
+      const { deleteJob } = useJobDB();
+
       const job = row.original;
 
       return (
@@ -78,11 +83,18 @@ export const columns: ColumnDef<Job>[] = [
 
           <Button
             variant="ghost"
-            onClick={() => {
-              const newJobs = jobs.filter(
-                (data, index) => `${index}` !== row.id
-              );
-              setJobs(newJobs);
+            onClick={async () => {
+              if (user) {
+                const toDelete = jobs.find(
+                  (data, index) => `${index}` == row.id
+                );
+                if (toDelete !== undefined) await deleteJob(toDelete);
+              } else {
+                const newJobs = jobs.filter(
+                  (data, index) => `${index}` !== row.id
+                );
+                setJobs(newJobs);
+              }
             }}
             disabled={selected === row.index}
           >

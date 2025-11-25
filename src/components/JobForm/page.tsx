@@ -53,6 +53,7 @@ import {
 import { PeriodType } from "@/lib/types/periodType";
 import { Textarea } from "../ui/textarea";
 import { useUserContext } from "@/contexts/userContext";
+import useJobDB from "@/app/hooks/useJobDB";
 
 const formSchema = z.object({
   type: z.nativeEnum(JobType),
@@ -78,6 +79,7 @@ const defaultValues = {
 export default function JobForm() {
   const { jobs, setJobs, selected, setSelected } = useContext(JobsContext);
   const { user } = useUserContext();
+  const { insertJob, editJob } = useJobDB();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -85,20 +87,11 @@ export default function JobForm() {
 
   const onSubmitCloud = async (data: Job) => {
     if (selected === null) {
-      var result = await fetch("api/jobs/cloud/create", {
-        method: "POST",
-        body: JSON.stringify({ job: data, userId: user?._id }),
-      });
-      console.log("result: ", result);
-
       // create new job
+      await insertJob(data);
     } else {
       // edit job
-      var result = await fetch("api/jobs/cloud/edit", {
-        method: "POST",
-        body: JSON.stringify({ job: data, userId: user?._id }),
-      });
-      console.log("result: ", result);
+      await editJob(data);
     }
   };
 
