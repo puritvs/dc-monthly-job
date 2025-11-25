@@ -29,15 +29,35 @@ import {
 } from "@/components/ui/table";
 import { JobType } from "@/lib/types/jobType";
 import { Input } from "../ui/input";
+import { JobStatus } from "@/lib/types/jobStatus";
+import { Badge } from "../ui/badge";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  status: JobStatus[];
+  isLoggedIn: boolean;
 }
+
+const statusBadge = {
+  Unchanged: <Badge variant="secondary">Unchanged</Badge>,
+  New: (
+    <Badge
+      variant="secondary"
+      className="bg-blue-500 text-white dark:bg-blue-600"
+    >
+      New
+    </Badge>
+  ),
+  Updated: <Badge>Updated</Badge>,
+  Deleted: <Badge variant="destructive">Deleted</Badge>,
+};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  status,
+  isLoggedIn = false,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -127,6 +147,7 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
+                {isLoggedIn && <TableHead>Status</TableHead>}
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
@@ -149,6 +170,9 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
+                  {isLoggedIn && (
+                    <TableCell> {statusBadge[status[row.index]]} </TableCell>
+                  )}
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(

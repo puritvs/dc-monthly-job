@@ -6,10 +6,11 @@ import { useJobContext } from "@/contexts/jobsContext";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
 import { CloudDownloadIcon } from "lucide-react";
+import { JobStatus } from "@/lib/types/jobStatus";
 
 export default function FetchCloudButton() {
   const { user } = useUserContext();
-  const { loading, setLoading, setJobs } = useJobContext();
+  const { loading, setLoading, setJobs, setStatus } = useJobContext();
 
   const onClick = async () => {
     if (user === null) return;
@@ -19,10 +20,10 @@ export default function FetchCloudButton() {
 
       body: JSON.stringify({ ...user }),
     });
-    console.log("res: ", res);
 
     if (res.ok === true) {
       var result: Job[] = JSON.parse(await res.json());
+      setStatus(new Array(result.length).fill(JobStatus.UNCHANGED));
       console.log("result: ");
 
       setJobs(result);

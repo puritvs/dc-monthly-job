@@ -64,9 +64,6 @@ export default function LoginDialog() {
               <LockIcon /> Authentication
             </div>
           </DialogTitle>
-          {/* <DialogDescription>
-            <Badge className="bg-neutral-800 text-white ">Authentication</Badge>
-          </DialogDescription> */}
         </DialogHeader>
         <form
           className="w-full max-w-sm"

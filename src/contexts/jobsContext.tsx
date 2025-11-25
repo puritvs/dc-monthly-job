@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Job } from "@/lib/types/job";
+import { JobStatus } from "@/lib/types/jobStatus";
 import {
   createContext,
   useState,
@@ -17,6 +18,8 @@ export const JobsContext = createContext<{
   setSelected: Dispatch<SetStateAction<number | null>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  status: JobStatus[];
+  setStatus: Dispatch<SetStateAction<JobStatus[]>>;
 }>({
   jobs: [],
   setJobs: () => {},
@@ -24,6 +27,8 @@ export const JobsContext = createContext<{
   setSelected: () => {},
   loading: false,
   setLoading: () => {},
+  status: [],
+  setStatus: () => {},
 });
 
 export default function JobsProvider({
@@ -34,10 +39,19 @@ export default function JobsProvider({
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [status, setStatus] = useState<JobStatus[]>([]);
   return (
     <JobsContext.Provider
-      value={{ jobs, setJobs, selected, setSelected, loading, setLoading }}
+      value={{
+        jobs,
+        setJobs,
+        selected,
+        setSelected,
+        loading,
+        setLoading,
+        status,
+        setStatus,
+      }}
     >
       {children}
     </JobsContext.Provider>

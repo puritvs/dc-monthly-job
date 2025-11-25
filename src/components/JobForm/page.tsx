@@ -52,6 +52,7 @@ import {
 } from "@/components/ui/popover";
 import { PeriodType } from "@/lib/types/periodType";
 import { Textarea } from "../ui/textarea";
+import { useUserContext } from "@/contexts/userContext";
 
 const formSchema = z.object({
   type: z.nativeEnum(JobType),
@@ -76,10 +77,30 @@ const defaultValues = {
 };
 export default function JobForm() {
   const { jobs, setJobs, selected, setSelected } = useContext(JobsContext);
+  const { user } = useUserContext();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
+
+  const onSubmitCloud = async (data: Job) => {
+    if (selected === null) {
+      var result = await fetch("api/jobs/cloud/create", {
+        method: "POST",
+        body: JSON.stringify({ job: data, userId: user?._id }),
+      });
+      console.log("result: ", result);
+
+      // create new job
+    } else {
+      // edit job
+      var result = await fetch("api/jobs/cloud/edit", {
+        method: "POST",
+        body: JSON.stringify({ job: data, userId: user?._id }),
+      });
+      console.log("result: ", result);
+    }
+  };
 
   const onSubmit = async (data: Job) => {
     if (selected !== null) {
@@ -111,7 +132,7 @@ export default function JobForm() {
   }, [selected]);
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(user ? onSubmitCloud : onSubmit)}>
         <Card className=" sm:m-2 md:m-5">
           <CardHeader>
             <CardTitle className="flex justify-between">
