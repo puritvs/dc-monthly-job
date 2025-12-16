@@ -20,7 +20,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Job } from "@/lib/types/job";
 import { PenTool } from "lucide-react";
 import { Textarea } from "../ui/textarea";
-import { jobToText } from "@/lib/utils";
+// import { jobToText } from "@/lib/utils";
 import fs from "fs";
 export function JobRawTextDialog() {
   const { jobs } = useContext(JobsContext);
@@ -61,12 +61,11 @@ export function JobRawTextDialog() {
           <DialogDescription>Formatted job summary</DialogDescription>
         </DialogHeader>
 
-        <Textarea
+        {/* <Textarea
           className="w-full min-h-100"
           spellCheck={false}
           defaultValue={jobToText(jobs)}
-          // disabled={true}
-        />
+        /> */}
         <Label htmlFor="textfile">Save</Label>
         <Input
           id="textfile"
